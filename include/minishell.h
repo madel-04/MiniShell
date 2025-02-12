@@ -12,6 +12,7 @@
 # include <sys/types.h>
 # include <ctype.h>
 # include <string.h>
+# include "../libft/libft.h"
 
 typedef enum e_type
 {
@@ -43,4 +44,4 @@ typedef struct s_token
 ~ Purple (~)
 TODO Mustard (todo)
 // Grey (//)
-*/
+*/ 

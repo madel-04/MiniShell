@@ -2,7 +2,7 @@
 
 
 
-static char	*ft_getword(char *input, int *i)
+static char	*ft_get_word(char *input, int *i)
 {
 	int		start;
 	int		len;
@@ -26,7 +26,7 @@ static char	*ft_getword(char *input, int *i)
 			fprintf(stderr, "ERROR: Comillas cerradas no encontradas\n");
 			return NULL;
 		}
-		(*i)++;
+		(*i)++; // * Saltarse la comilla que cierra
 	} // & HASTA AQUÍ ??
 	else
 	{
@@ -38,7 +38,7 @@ static char	*ft_getword(char *input, int *i)
 				len++;
 			   }
 	}
-	word = ft_strndup(&input[start], len);
+	word = ft_strndup(&input[start], len); // TODO LIBFT
 	return (word);
 }
 
@@ -54,7 +54,7 @@ t_token	*tokenize_input(char *input)
 	i = 0;
 	while(input[i])
 	{
-		while(input[i] && isspace(input[i])) // TODO
+		while(input[i] && isspace(input[i])) // TODO LIBFT
 			i++;
 		if (!input[i])
 			break;
@@ -65,7 +65,7 @@ t_token	*tokenize_input(char *input)
 			if ((input[i] == '<' || input[i] == '>') && input[i+1] == input[i])
 			{
 				op[1] = input[i+1];
-				op[2] = '\0'
+				op[2] = '\0';
 				i += 2;
 			}
 			else
