@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+// HOLA CAROL!! Hay una extensión que se llama Colorful Comments
+// Que así ves los comentarios de coloriens y no te parecen tan raros
+// los símbolos que tengo puestos jsjs <3
+
 int	main(void)
 {
 	char		*input;
