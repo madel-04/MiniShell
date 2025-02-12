@@ -95,3 +95,8 @@ t_token	*tokenize_input(char *input)
 	}
 	return (tokens);
 }
+
+void	free_tokens(t_token *tokens)
+{
+	
+}
