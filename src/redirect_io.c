@@ -73,7 +73,7 @@ static int	open_file(t_redir *redir)
 	if (fd == -1)
 	{
 		perror("minishell");
-		fprintf(stderr, "Failed to open file: %s\n", redir->filename);
+		fprintf(stderr, "Failed to open file: %s\n", redir->filename);//!
 		exit(EXIT_FAILURE);
 	}
 	return (fd);
@@ -104,6 +104,9 @@ static void	dup_io(int fd, t_redir *redir)
 void	redirect_io(t_redir *redir)
 {
 	int	fd;
+
+	printf("%d\n", redir->type);
+	printf("%s\n", redir->filename);
 
 	while (redir)
 	{

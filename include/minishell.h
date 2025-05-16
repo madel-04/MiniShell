@@ -37,9 +37,9 @@ typedef enum e_type
 	TOKEN_WORD, //0
 	TOKEN_PIPE, // 1
 	TOKEN_INPUT, // 2
-	TOKEN_OUTPUT, // 4
-	TOKEN_HEREDOC, // 5
-	TOKEN_RED_OUTPUT_APPEND, // 6
+	TOKEN_OUTPUT, // 3
+	TOKEN_HEREDOC, // 4
+	TOKEN_RED_OUTPUT_APPEND, // 5
 }		t_type;
 
 typedef struct s_token

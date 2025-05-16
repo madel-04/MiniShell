@@ -62,7 +62,7 @@ static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 	else
 		execute_external(cmd, shell);
 }
-
+//!aqui 
 pid_t	create_child_process(int prev_pipe_in, int fd[2], t_cmd *current,
 				t_shell *shell)
 {
@@ -89,6 +89,11 @@ pid_t	create_child_process(int prev_pipe_in, int fd[2], t_cmd *current,
 		}
 		execute_single_cmd(current, shell);
 		exit(shell->last_exit_status);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	return (pid);
 }

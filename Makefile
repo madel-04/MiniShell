@@ -30,7 +30,7 @@ SRC =   $(SRC_DIR)builtins.c \
 
 
 
-CFLAGS = -Wall -Wextra -Werror -pthread -g
+CFLAGS = -Wall -Wextra -Werror -pthread
 LDFLAGS = -lreadline -Llibft -lft
 OBJ = $(patsubst %.c, $(OBJ_DIR)%.o, $(notdir $(SRC)))
 
