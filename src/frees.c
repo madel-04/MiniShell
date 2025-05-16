@@ -57,9 +57,9 @@ void	free_tokens(t_token *tokens)
 		return ;
 	while (tokens)
 	{
-		temp = tokens;
-		free(temp->value);
-		free(temp);
-		tokens = tokens->next;
+		temp = tokens->next;
+		free(tokens->value);
+		free(tokens);
+		tokens = temp;
 	}
 }

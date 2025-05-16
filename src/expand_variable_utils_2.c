@@ -53,7 +53,7 @@ static void	append_variable_value(t_exp *exp, t_shell *shell,
 	if (var_value)
 		append_str(exp, var_value);
 }
-
+/*
 void	handle_variable(t_exp *exp, t_shell *shell)
 {
 	char	var_name[256];
@@ -77,4 +77,38 @@ void	handle_variable(t_exp *exp, t_shell *shell)
 	}
 	read_variable_name(exp, var_name);
 	append_variable_value(exp, shell, var_name);
+}
+*/
+void	handle_variable(t_exp *exp, t_shell *shell)
+{
+    char	var_name[256];
+
+    exp->i++;
+    if (is_escaped(exp))
+    {
+        append_char(exp, '$');
+        return ;
+    }
+    if (!exp->token[exp->i])
+    {
+        append_char(exp, '$');
+        return ;
+    }
+    if (exp->token[exp->i] == '?')
+    {
+        handle_special_case(exp, shell);
+        return ;
+    }
+    if (ft_isdigit(exp->token[exp->i]))
+    {
+        exp->i++;
+        return ;
+    }
+    if (!(ft_isalpha(exp->token[exp->i]) || exp->token[exp->i] == '_'))
+    {
+        append_char(exp, '$');
+        return ;
+    }
+    read_variable_name(exp, var_name);
+    append_variable_value(exp, shell, var_name);
 }

@@ -49,7 +49,7 @@ static char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 	return (result);
 }
 
-void	set_env_var(const char *name, const char *value, t_shell *shell)
+/* void	set_env_var(const char *name, const char *value, t_shell *shell)
 {
 	int		i;
 	char	*new_var;
@@ -60,6 +60,32 @@ void	set_env_var(const char *name, const char *value, t_shell *shell)
 	{
 		if (ft_strncmp(shell->env[i], name, ft_strlen(name)) == 0
 			&& shell->env[i][ft_strlen(name)] == '=')
+		{
+			free(shell->env[i]);
+			shell->env[i] = new_var;
+			return ;
+		}
+		i++;
+	}
+	shell->env = ft_realloc(shell->env, (i + 2) * sizeof(char *));
+	shell->env[i] = new_var;
+	shell->env[i + 1] = NULL;
+} */
+
+void	set_env_var(const char *name, const char *value, t_shell *shell)
+{
+	int		i;
+	char	*new_var;
+
+	if (value)
+		new_var = ft_strjoin3(name, "=", value);
+	else
+		new_var = ft_strdup(name);
+	i = 0;
+	while (shell->env[i])
+	{
+		if (ft_strncmp(shell->env[i], name, ft_strlen(name)) == 0 &&
+			(shell->env[i][ft_strlen(name)] == '=' || shell->env[i][ft_strlen(name)] == '\0'))
 		{
 			free(shell->env[i]);
 			shell->env[i] = new_var;
@@ -97,7 +123,7 @@ void	unset_env_var(const char *name, t_shell *shell)
 	}
 }
 
-void	print_env(char **env)
+/* void	print_env(char **env)
 {
 	int	i;
 
@@ -105,6 +131,18 @@ void	print_env(char **env)
 	while (env[i])
 	{
 		printf("%s\n", env[i]);
+		i++;
+	}
+} */
+void	print_env(char **env)
+{
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strchr(env[i], '='))
+			printf("%s\n", env[i]);
 		i++;
 	}
 }

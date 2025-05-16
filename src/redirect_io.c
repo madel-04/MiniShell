@@ -78,8 +78,8 @@ static int	open_file(t_redir *redir)
 	}
 	return (fd);
 }
-
-static void	dup_io(int fd, t_redir *redir)
+/*
+&static void	dup_io(int fd, t_redir *redir)
 {
 	if (redir->type == TOKEN_INPUT || redir->type == TOKEN_HEREDOC)
 	{
@@ -100,6 +100,8 @@ static void	dup_io(int fd, t_redir *redir)
 		}
 	}
 }
+*/
+/*
 
 void	redirect_io(t_redir *redir)
 {
@@ -115,4 +117,86 @@ void	redirect_io(t_redir *redir)
 		close(fd);
 		redir = redir->next;
 	}
+}
+*/
+/*
+void	redirect_io(t_redir *redir)
+{
+    int fd = -1;
+    t_redir *curr = redir;
+
+    while (curr)
+    {
+        if (curr->type == TOKEN_INPUT || curr->type == TOKEN_HEREDOC)
+        {
+            if (fd != -1)
+                close(fd);
+            fd = open_file(curr);
+            dup_io(fd, curr);
+        }
+        curr = curr->next;
+    }
+    curr = redir;
+    fd = -1;
+    while (curr)
+    {
+        if (curr->type == TOKEN_OUTPUT || curr->type == TOKEN_RED_OUTPUT_APPEND)
+        {
+            if (fd != -1)
+                close(fd);
+            fd = open_file(curr);
+            dup_io(fd, curr);
+        }
+        curr = curr->next;
+    }
+    if (fd != -1)
+        close(fd);
+}
+*/
+
+void	redirect_io(t_redir *redir)
+{
+    int		in_fd = -1;
+    int		out_fd = -1;
+    t_redir	*curr = redir;
+
+    // Procesa todas las redirecciones en orden
+    while (curr)
+    {
+        if (curr->type == TOKEN_INPUT || curr->type == TOKEN_HEREDOC)
+        {
+            if (in_fd != -1)
+                close(in_fd);
+            in_fd = open_file(curr);
+        }
+        else if (curr->type == TOKEN_OUTPUT || curr->type == TOKEN_RED_OUTPUT_APPEND)
+        {
+            if (out_fd != -1)
+                close(out_fd);
+            out_fd = open_file(curr);
+        }
+        curr = curr->next;
+    }
+    // Aplica solo la última redirección de entrada
+    if (in_fd != -1)
+    {
+        if (dup2(in_fd, STDIN_FILENO) == -1)
+        {
+            perror("dup2");
+            close(in_fd);
+            exit(EXIT_FAILURE);
+        }
+        close(in_fd);
+    }
+    // Aplica solo la última redirección de salida
+    if (out_fd != -1)
+    {
+        if (dup2(out_fd, STDOUT_FILENO) == -1)
+        {
+            perror("dup2");
+            close(out_fd);
+            exit(EXIT_FAILURE);
+        }
+        close(out_fd);
+    }
 }

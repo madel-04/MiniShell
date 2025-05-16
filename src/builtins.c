@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 void	ft_echo(char **argv)
 {
 	int	nl_flag;
@@ -33,6 +33,42 @@ void	ft_echo(char **argv)
 	}
 	if (!nl_flag)
 		ft_putstr_fd("\n", 1);
+}
+*/
+
+void ft_echo(char **argv)
+{
+	int nl_flag;
+	int i;
+	int j;
+
+	nl_flag = 0;
+	i = 1;
+    while (argv[i])
+    {
+        if (argv[i][0] == '-' && argv[i][1] == 'n')
+        {
+            j = 2;
+            while (argv[i][j] == 'n')
+                j++;
+            if (argv[i][j] == '\0')
+            {
+                nl_flag = 1;
+                i++;
+                continue;
+            }
+        }
+        break;
+    }
+    while (argv[i])
+    {
+        ft_putstr_fd(argv[i], 1);
+        if (argv[i + 1])
+            ft_putstr_fd(" ", 1);
+        i++;
+    }
+    if (!nl_flag)
+        ft_putstr_fd("\n", 1);
 }
 
 void	ft_cd(char **argv, t_shell *shell)
