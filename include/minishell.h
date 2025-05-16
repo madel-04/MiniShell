@@ -135,6 +135,8 @@ void	handle_variable(t_exp *exp, t_shell *shell);
 void	append_char(t_exp *exp, char c);
 void	append_str(t_exp *exp, const char *str);
 void	handle_exit_status(t_exp *exp);
+void	heredoc_loop(int fd_write, char *delimiter);
+void	handle_special_case(t_exp *exp, t_shell *shell);
 
 // *** EXPAND VARIABLE ***
 char	*expand_variable(char *token, int last_exit_status, t_shell *shell);
@@ -162,6 +164,7 @@ void	process_pipe(t_parse *p);
 int		process_redir(t_parse *p);
 int		validate_redirection_token(t_parse *p);
 int		process_word(t_parse *p);
+void	close_unused_pipes(int *prev_pipe_in, int fd[2], t_cmd *current);
 
 // *** REDIRECT IO ***
 void	redirect_io(t_redir *redir);
@@ -170,6 +173,7 @@ void	redirect_io(t_redir *redir);
 int		ft_sigemptyset(sigset_t *set);
 void	init_signals(void);
 void	handle_sigint(int sig);
+void	print_file_error(char *msg, char *file);
 
 // *** TOKENIZE INPUT ***
 t_token	*tokenize_input(char *input);

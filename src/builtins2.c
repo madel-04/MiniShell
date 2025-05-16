@@ -42,29 +42,7 @@ static void	handle_valid_identifier(char *arg, char *eq_sign, t_shell *shell)
 	set_env_var(arg, eq_sign + 1, shell);
 	*eq_sign = '=';
 }
-/*
-void	ft_export(char **argv, t_shell *shell)
-{
-	int		i;
-	char	*eq_sign;
 
-	i = 1;
-	if (!argv[1])
-	{
-		print_env_sorted(shell->env);
-		return ;
-	}
-	while (argv[i])
-	{
-		eq_sign = ft_strchr(argv[i], '=');
-		if (!is_valid_identifier(argv[i], eq_sign))
-			handle_invalid_identifier(argv[i], shell);
-		else if (eq_sign)
-			handle_valid_identifier(argv[i], eq_sign, shell);
-		i++;
-	}
-}
-*/
 void	ft_export(char **argv, t_shell *shell)
 {
 	int		i;
@@ -91,7 +69,6 @@ void	ft_export(char **argv, t_shell *shell)
 		i++;
 	}
 }
-
 
 void	ft_exit(char **argv, t_shell *shell)
 {

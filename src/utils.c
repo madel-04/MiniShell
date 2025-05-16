@@ -38,51 +38,6 @@ void	*ft_realloc(void *ptr, size_t new_size)
 	free(ptr);
 	return (new_ptr);
 }
-/*
-void	print_tokens(t_token *tokens)
-{
-	t_token	*current;
-
-	current = tokens;
-	while (current)
-	{
-		printf("Token Type: %d, Token Value: %s, Quote type: %d\n",
-			current->type, current->value, current->quote_type);
-		current = current->next;
-	}
-}
-
-// Función para imprimir la estructura t_cmd
-void	print_cmd(t_cmd *cmd)
-{
-	int			i;
-	t_redir		*redir;
-	
-	while (cmd)
-	{
-		printf("Command:\n");
-		if (cmd->argv)
-		{
-			printf("Arguments:\n");
-			for (i = 0; cmd->argv[i]; i++)
-				printf("  argv[%d]: %s\n", i, cmd->argv[i]);
-			}
-			if (cmd->redir)
-			{
-			printf("Redirections:\n");
-			redir = cmd->redir;
-			while (redir)
-			{
-				printf("  Redir type: %d, filename: %s\n",
-				redir->type, redir->filename);
-				redir = redir->next;
-			}
-		}
-		cmd = cmd->next;
-		printf("\n");
-	}
-}
-*/
 
 void	free_array(char **arr)
 {

@@ -88,4 +88,20 @@ t_cmd	*parse_tokens(t_token **tokens, t_shell *shell)
 		p.current_cmd->argv = p.argv;
 	return (p.cmd_head);
 }
-//print_cmd(p.cmd_head);
+
+void	ft_unset(char **argv, t_shell *shell)
+{
+	int	i;
+
+	i = 1;
+	while (argv[i])
+	{
+		unset_env_var(argv[i], shell);
+		i++;
+	}
+}
+
+char	**env_to_array(char **env)
+{
+	return (env);
+}

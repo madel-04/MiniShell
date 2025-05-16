@@ -68,6 +68,6 @@ int	handle_quotes(char *input, int *i, char **word)
 		else
 			append_char2(input, i, word);
 	}
-	fprintf(stderr, "syntax error: unclosed quote\n");
+	ft_putstr_fd("syntax error: unclosed quote\n", 2);
 	return (0);
 }

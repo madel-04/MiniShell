@@ -31,7 +31,7 @@ int	validate_redirection_token(t_parse *p)
 {
 	if (p->token->next == NULL)
 	{
-		fprintf(stderr, "syntax error: redirection without filename\n");
+		ft_putstr_fd("syntax error: redirection without filename\n", 2);
 		free_tokens(p->token);
 		free_cmds(p->cmd_head);
 		p->cmd_head = NULL;
@@ -39,7 +39,7 @@ int	validate_redirection_token(t_parse *p)
 	}
 	if (p->token->next->type != TOKEN_WORD)
 	{
-		fprintf(stderr, "syntax error: redirection without filename\n");
+		ft_putstr_fd("syntax error: redirection without filename\n", 2);
 		free_tokens(p->token);
 		free_cmds(p->cmd_head);
 		p->cmd_head = NULL;
@@ -70,4 +70,15 @@ int	process_word(t_parse *p)
 	p->argc++;
 	p->argv[p->argc] = NULL;
 	return (1);
+}
+
+void	close_unused_pipes(int *prev_pipe_in, int fd[2], t_cmd *current)
+{
+	if (*prev_pipe_in != -1)
+		close(*prev_pipe_in);
+	if (current->next)
+	{
+		close(fd[1]);
+		*prev_pipe_in = fd[0];
+	}
 }

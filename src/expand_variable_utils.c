@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-// Agrega un solo carácter al buffer.
 void	append_char(t_exp *exp, char c)
 {
 	if (exp->res_index + 1 >= exp->buff_size)
@@ -25,7 +24,6 @@ void	append_char(t_exp *exp, char c)
 	exp->result[exp->res_index] = '\0';
 }
 
-// Agrega una cadena al buffer.
 void	append_str(t_exp *exp, const char *str)
 {
 	size_t	len;
@@ -49,27 +47,34 @@ void	handle_exit_status(t_exp *exp)
 	free(status_str);
 	exp->i += 2;
 }
-/*
-void	print_shell_env(t_shell *shell)
-{
-	int	i;
 
-	i = 0;
-	if (!shell)
+void	heredoc_loop(int fd_write, char *delimiter)
+{
+	char	*line;
+
+	while (1)
 	{
-		printf("shell->env is not initialized.\n");
-		return ;
-	}
-	if (!shell->env)
-	{
-		printf("shell->env is NULL.\n");
-		return ;
-	}
-	printf("Environment variables:\n");
-	while (shell->env[i])
-	{
-		printf("%s\n", shell->env[i]);
-		i++;
+		line = readline("> ");
+		if (!line || ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(fd_write, line, ft_strlen(line));
+		write(fd_write, "\n", 1);
+		free(line);
 	}
 }
-*/
+
+void	handle_special_case(t_exp *exp, t_shell *shell)
+{
+	char	*var_value;
+
+	if (exp->token[exp->i] == '?')
+	{
+		var_value = ft_itoa(shell->last_exit_status);
+		append_str(exp, var_value);
+		free(var_value);
+		exp->i++;
+	}
+}

@@ -60,40 +60,10 @@ char	*get_cmd_path(char *cmd, char **env)
 	return (NULL);
 }
 
-// En `env_utils.c`
-char	**env_to_array(char **env)
-{
-	return (env);
-}
-
-// En `env_utils.c`
 static int	compare_env_vars(const void *a, const void *b)
 {
 	return (ft_strcmp(*(const char **)a, *(const char **)b));
 }
-
-/* void	print_env_sorted(char **env)
-{
-	char	**sorted_env;
-	int		count;
-	int		i;
-
-	count = 0;
-	while (env[count])
-		count++;
-	sorted_env = malloc(sizeof(char *) * (count + 1));
-	if (!sorted_env)
-		return ;
-	ft_memcpy(sorted_env, env, sizeof(char *) * (count + 1));
-	ft_qsort(sorted_env, count, sizeof(char *), compare_env_vars);
-	i = 0;
-	while (sorted_env[i])
-	{
-		printf("declare -x %s\n", sorted_env[i]);
-		i++;
-	}
-	free(sorted_env);
-} */
 
 void	print_export_entry(char *entry)
 {

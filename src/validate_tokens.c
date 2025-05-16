@@ -39,7 +39,6 @@ int	validate_token_sequence(t_token *tokens, t_shell *shell)
 			if (!validate_redirection(cur, shell))
 			{
 				shell->last_exit_status = 2;
-				free_tokens(tokens);
 				return (0);
 			}
 			cur = cur->next;
@@ -63,14 +62,12 @@ int	validate_pipe(t_token *cur, t_token *tokens, t_shell *shell)
 	{
 		printf("syntax error: pipe at end of command\n");
 		shell->last_exit_status = 2;
-	//	free_tokens(tokens);
 		return (0);
 	}
 	if (cur->next->type == TOKEN_PIPE)
 	{
 		printf("syntax error: consecutive pipes\n");
 		shell->last_exit_status = 2;
-	//	free_tokens(tokens);
 		return (0);
 	}
 	return (1);
@@ -90,27 +87,3 @@ int	validate_redirection(t_token *cur, t_shell *shell)
 	}
 	return (1);
 }
-
-/*
-int	validate_final_pipe(t_token *cur, t_token *tokens)
-{
-	(void)tokens;
-	if (cur && cur->type == TOKEN_PIPE)
-	{
-		printf("syntax error: pipe at end of command\n");
-		return (0);
-	}
-	return (1);
-}
-*/
-/*
-int	validate_token2(t_token *cur, t_token *tokens)
-{
-	if (cur->type == TOKEN_PIPE)
-		return (validate_pipe(cur, tokens));
-		if (cur->type == TOKEN_INPUT || cur->type == TOKEN_OUTPUT
-		|| cur->type == TOKEN_HEREDOC || cur->type == TOKEN_RED_OUTPUT_APPEND)
-		return (validate_redirection(cur));
-		return (1);
-	}
-*/

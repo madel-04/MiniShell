@@ -44,10 +44,38 @@ static void	append_redirection(t_cmd *cmd, t_redir *new_redir)
 	}
 }
 
+int	init_current_cmd_if_needed(t_parse *p)
+{
+	t_cmd	*temp;
+
+	if (p->current_cmd)
+		return (1);
+	p->current_cmd = malloc(sizeof(t_cmd));
+	if (!p->current_cmd)
+		return (0);
+	p->current_cmd->redir = NULL;
+	p->current_cmd->argv = NULL;
+	p->current_cmd->next = NULL;
+	if (!p->cmd_head)
+		p->cmd_head = p->current_cmd;
+	else
+	{
+		temp = p->cmd_head;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = p->current_cmd;
+	}
+	return (1);
+}
+
 int	add_redirection(t_parse *p)
 {
 	t_redir	*new_redir;
 
+	if (!p->token || !p->token->next || p->token->next->type != TOKEN_WORD)
+		return (0);
+	if (!init_current_cmd_if_needed(p))
+		return (0);
 	new_redir = malloc(sizeof(t_redir));
 	if (!new_redir)
 		return (0);

@@ -42,3 +42,10 @@ void	init_signals(void)
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
+
+void	print_file_error(char *msg, char *file)
+{
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd(file, 2);
+	ft_putstr_fd("\n", 2);
+}

@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execute_cmd_utils.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2025/04/07 13:20:40 by marvin            #+#    #+#             */
 /*   Updated: 2025/04/07 13:20:40 by marvin           ###   ########.fr       */
 /*                                                                            */
@@ -62,9 +65,27 @@ static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 	else
 		execute_external(cmd, shell);
 }
-//!aqui 
-pid_t	create_child_process(int prev_pipe_in, int fd[2], t_cmd *current,
-				t_shell *shell)
+
+static void	setup_child_process(int prev_pipe_in, int fd[2],
+				t_cmd *current, t_shell *shell)
+{
+	if (prev_pipe_in != -1)
+	{
+		dup2(prev_pipe_in, STDIN_FILENO);
+		close(prev_pipe_in);
+	}
+	if (current->next)
+	{
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		close(fd[0]);
+	}
+	execute_single_cmd(current, shell);
+	exit(shell->last_exit_status);
+}
+
+pid_t	create_child_process(int prev_pipe_in, int fd[2],
+				t_cmd *current, t_shell *shell)
 {
 	pid_t	pid;
 
@@ -76,19 +97,9 @@ pid_t	create_child_process(int prev_pipe_in, int fd[2], t_cmd *current,
 	}
 	else if (pid == 0)
 	{
-		if (prev_pipe_in != -1)
-		{
-			dup2(prev_pipe_in, STDIN_FILENO);
-			close(prev_pipe_in);
-		}
-		if (current->next)
-		{
-			dup2(fd[1], STDOUT_FILENO);
-			close(fd[1]);
-			close(fd[0]);
-		}
-		execute_single_cmd(current, shell);
-		exit(shell->last_exit_status);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		setup_child_process(prev_pipe_in, fd, current, shell);
 	}
 	else
 	{
