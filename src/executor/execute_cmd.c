@@ -86,6 +86,7 @@ int	execute_cmd(t_cmd *cmds, t_shell *shell)
 {
 	int	saved_stdin;
 	int	saved_stdout;
+	int	ret;
 
 	if (!cmds)
 		return (1);
@@ -103,8 +104,8 @@ int	execute_cmd(t_cmd *cmds, t_shell *shell)
 			close(saved_stdout);
 		}
 		else
-			execute_builtin(cmds, shell);
-		return (shell->last_exit_status);
+			ret = execute_builtin(cmds, shell);
+		return (ret);
 	}
 	handle_pipes(cmds, shell);
 	return (shell->last_exit_status);

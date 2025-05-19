@@ -104,15 +104,16 @@ typedef struct s_partition_args
 int		add_redirection(t_parse *p);
 
 // *** BUILTINS ***
-void	ft_echo(char **argv);
-void	ft_cd(char **argv, t_shell *shell);
-void	ft_pwd(void);
-void	ft_unset(char **argv, t_shell *shell);
-void	ft_env(t_shell *shell);
+int		ft_echo(char **argv);
+int		ft_cd(char **argv, t_shell *shell);
+int		ft_pwd(void);
+int		ft_unset(char **argv, t_shell *shell);
+int		ft_env(t_shell *shell);
 
 // *** BUILTINS 2 ***
-void	ft_export(char **argv, t_shell *shell);
-void	ft_exit(char **argv, t_shell *shell);
+int		is_valid_identifier(const char *str, char *eq_sign);
+int		ft_export(char **argv, t_shell *shell);
+int		ft_exit(char **argv, t_shell *shell);
 
 // *** ENV UTILS ***
 char	*get_env_value(const char *name, char **env);
@@ -127,6 +128,7 @@ pid_t	create_child_process(int prev_pipe_in, int fd[2], t_cmd *current,
 
 // *** EXECUTE CMD ***
 int		execute_cmd(t_cmd *cmds, t_shell *shell);
+int		is_builtin_cmd(t_cmd *cmd);
 
 // *** EXPAND VARIABLE UTILS 2 ***
 void	handle_variable(t_exp *exp, t_shell *shell);
