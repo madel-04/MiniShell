@@ -89,7 +89,7 @@ t_cmd	*parse_tokens(t_token **tokens, t_shell *shell)
 	return (p.cmd_head);
 }
 
-void	ft_unset(char **argv, t_shell *shell)
+/*void	ft_unset(char **argv, t_shell *shell)
 {
 	int	i;
 
@@ -99,6 +99,29 @@ void	ft_unset(char **argv, t_shell *shell)
 		unset_env_var(argv[i], shell);
 		i++;
 	}
+}*/
+int	ft_unset(char **argv, t_shell *shell)
+{
+	int	i;
+	int	ret;
+
+	i = 1;
+	ret = 0;
+	while (argv[i])
+	{
+		if (!is_valid_identifier(argv[i], NULL))
+		{
+			ft_putstr_fd("minishell: unset: `", 2);
+			ft_putstr_fd(argv[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			shell->last_exit_status = 1;
+			ret = 1;
+		}
+		else
+			unset_env_var(argv[i], shell);
+		i++;
+	}
+	return (ret);
 }
 
 char	**env_to_array(char **env)

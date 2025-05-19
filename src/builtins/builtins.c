@@ -34,7 +34,7 @@ static int	parse_n_flag(char **argv, int *i)
 	return (nl_flag);
 }
 
-void	ft_echo(char **argv)
+int	ft_echo(char **argv)
 {
 	int	nl_flag;
 	int	i;
@@ -50,9 +50,10 @@ void	ft_echo(char **argv)
 	}
 	if (!nl_flag)
 		ft_putstr_fd("\n", 1);
+	return (0);
 }
 
-void	ft_cd(char **argv, t_shell *shell)
+int	ft_cd(char **argv, t_shell *shell)
 {
 	char	*path;
 	char	cwd[PATH_MAX];
@@ -61,7 +62,7 @@ void	ft_cd(char **argv, t_shell *shell)
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		shell->last_exit_status = 1;
-		return ;
+		return (1);
 	}
 	if (!argv[1])
 		path = get_env_value("HOME", shell->env);
@@ -71,25 +72,33 @@ void	ft_cd(char **argv, t_shell *shell)
 	{
 		perror("cd");
 		shell->last_exit_status = 1;
-		return ;
+		return (1);
 	}
 	getcwd(cwd, sizeof(cwd));
 	set_env_var("OLDPWD", get_env_value("PWD", shell->env), shell);
 	set_env_var("PWD", cwd, shell);
 	shell->last_exit_status = 0;
+	return (0);
 }
 
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	cwd[PATH_MAX];
 
 	if (getcwd(cwd, sizeof(cwd)))
+	{
 		printf("%s\n", cwd);
+		return (0);
+	}
 	else
+	{
 		perror("pwd");
+		return (1);
+	}
 }
 
-void	ft_env(t_shell *shell)
+int	ft_env(t_shell *shell)
 {
 	print_env(shell->env);
+	return (0);
 }

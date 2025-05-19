@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	is_valid_identifier(const char *str, char *eq_sign)
+int	is_valid_identifier(const char *str, char *eq_sign)
 {
 	int	i;
 
@@ -43,22 +43,27 @@ static void	handle_valid_identifier(char *arg, char *eq_sign, t_shell *shell)
 	*eq_sign = '=';
 }
 
-void	ft_export(char **argv, t_shell *shell)
+int	ft_export(char **argv, t_shell *shell)
 {
 	int		i;
 	char	*eq_sign;
+	int		ret;
 
 	i = 1;
+	ret = 0;
 	if (!argv[1])
 	{
 		print_env_sorted(shell->env);
-		return ;
+		return (0);
 	}
 	while (argv[i])
 	{
 		eq_sign = ft_strchr(argv[i], '=');
 		if (!is_valid_identifier(argv[i], eq_sign))
+		{
 			handle_invalid_identifier(argv[i], shell);
+			ret = 1;
+		}
 		else if (eq_sign)
 			handle_valid_identifier(argv[i], eq_sign, shell);
 		else
@@ -68,9 +73,10 @@ void	ft_export(char **argv, t_shell *shell)
 		}
 		i++;
 	}
+	return (ret);
 }
 
-void	ft_exit(char **argv, t_shell *shell)
+int	ft_exit(char **argv, t_shell *shell)
 {
 	int	exit_code;
 
@@ -78,7 +84,7 @@ void	ft_exit(char **argv, t_shell *shell)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		shell->last_exit_status = 1;
-		return ;
+		return (1);
 	}
 	if (argv[1] && !argv[2])
 	{

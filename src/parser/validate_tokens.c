@@ -38,7 +38,7 @@ int	validate_token_sequence(t_token *tokens, t_shell *shell)
 		{
 			if (!validate_redirection(cur, shell))
 			{
-				shell->last_exit_status = 2;
+				shell->last_exit_status = 258;
 				return (0);
 			}
 			cur = cur->next;
@@ -51,7 +51,7 @@ int	validate_token_sequence(t_token *tokens, t_shell *shell)
 int	handle_unexpected_pipe(t_shell *shell)
 {
 	printf(" syntax error near unexpected token `|'\n");
-	shell->last_exit_status = 2;
+	shell->last_exit_status = 258;
 	return (0);
 }
 
@@ -61,13 +61,13 @@ int	validate_pipe(t_token *cur, t_token *tokens, t_shell *shell)
 	if (!cur->next)
 	{
 		printf("syntax error: pipe at end of command\n");
-		shell->last_exit_status = 2;
+		shell->last_exit_status = 258;
 		return (0);
 	}
 	if (cur->next->type == TOKEN_PIPE)
 	{
 		printf("syntax error: consecutive pipes\n");
-		shell->last_exit_status = 2;
+		shell->last_exit_status = 258;
 		return (0);
 	}
 	return (1);
