@@ -20,7 +20,7 @@ int	ft_isspace(int c)
 	return (0);
 }
 
-void	*ft_realloc(void *ptr, size_t new_size)
+/*void	*ft_realloc(void *ptr, size_t new_size)
 {
 	void	*new_ptr;
 
@@ -37,6 +37,27 @@ void	*ft_realloc(void *ptr, size_t new_size)
 	ft_memcpy(new_ptr, ptr, new_size);
 	free(ptr);
 	return (new_ptr);
+}*/
+
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
+{
+    void	*new_ptr;
+
+    if (new_size == 0)
+    {
+        free(ptr);
+        return (NULL);
+    }
+    new_ptr = malloc(new_size);
+    if (!new_ptr)
+        return (NULL);
+    if (ptr && old_size > 0)
+    {
+        size_t copy_size = old_size < new_size ? old_size : new_size;
+        ft_memcpy(new_ptr, ptr, copy_size);
+        free(ptr);
+    }
+    return (new_ptr);
 }
 
 void	free_array(char **arr)
@@ -60,4 +81,21 @@ int	ft_isdigit_str(const char *str)
 		str++;
 	}
 	return (1);
+}
+
+char	**create_default_env(void)
+{
+	char	**env;
+	char	cwd[PATH_MAX];
+
+	env = malloc(sizeof(char *) * 4);
+	if (!env)
+		return (NULL);
+	if (!getcwd(cwd, sizeof(cwd)))
+		ft_strlcpy(cwd, "/", sizeof(cwd));
+	env[0] = ft_strjoin3("PWD=", cwd, "");
+	env[1] = ft_strdup("SHLVL=1");
+	env[2] = ft_strdup("_=/usr/bin/env");
+	env[3] = NULL;
+	return (env);
 }

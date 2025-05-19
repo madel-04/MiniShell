@@ -28,10 +28,10 @@ SRC =   $(SRC_DIR)builtins/builtins.c \
 				$(SRC_DIR)executor/add_redirections.c \
 				$(SRC_DIR)parser/handle_quotes.c \
 				$(SRC_DIR)utils/ft_qsort.c \
+				$(SRC_DIR)utils/shell_level.c \
 
 
-
-CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline -Llibft -lft
 
 OBJ = $(SRC:$(SRC_DIR)%= $(OBJ_DIR)%)

@@ -17,7 +17,8 @@ void	append_char(t_exp *exp, char c)
 	if (exp->res_index + 1 >= exp->buff_size)
 	{
 		exp->buff_size *= 2;
-		exp->result = ft_realloc(exp->result, exp->buff_size);
+		exp->result = ft_realloc(exp->result, exp->buff_size / 2,
+				exp->buff_size);
 	}
 	exp->result[exp->res_index] = c;
 	exp->res_index++;
@@ -32,7 +33,8 @@ void	append_str(t_exp *exp, const char *str)
 	while (exp->res_index + len + 1 > exp->buff_size)
 	{
 		exp->buff_size *= 2;
-		exp->result = ft_realloc(exp->result, exp->buff_size);
+		exp->result = ft_realloc(exp->result, exp->buff_size / 2,
+				exp->buff_size);
 	}
 	ft_strcpy(exp->result + exp->res_index, str);
 	exp->res_index += len;

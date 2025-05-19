@@ -58,7 +58,8 @@ int	process_word(t_parse *p)
 	if (!expanded)
 		return (free(p->argv), free_tokens(p->token), free_cmds(p->cmd_head),
 			0);
-	temp_argv = ft_realloc(p->argv, sizeof(char *) * (p->argc + 2));
+	temp_argv = ft_realloc(p->argv,
+    	sizeof(char *) * (p->argc + 1), sizeof(char *) * (p->argc + 2));
 	if (!temp_argv)
 	{
 		free(expanded);

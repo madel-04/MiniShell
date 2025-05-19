@@ -100,7 +100,11 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	shell.last_exit_status = 0;
-	shell.env = ft_arrdup(env);
+	if (!env || !env[0])
+		shell.env = create_default_env();
+	else
+		shell.env = ft_arrdup(env);
+	increment_shlvl(shell.env);
 	init_signals();
 	shell_loop(&shell);
 	rl_clear_history();

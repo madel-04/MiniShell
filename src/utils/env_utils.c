@@ -36,6 +36,7 @@ void	set_env_var(const char *name, const char *value, t_shell *shell)
 {
 	int		i;
 	char	*new_var;
+	int		old_size;
 
 	if (value)
 		new_var = ft_strjoin3(name, "=", value);
@@ -54,7 +55,10 @@ void	set_env_var(const char *name, const char *value, t_shell *shell)
 		}
 		i++;
 	}
-	shell->env = ft_realloc(shell->env, (i + 2) * sizeof(char *));
+	old_size = 0;
+	while (shell->env[old_size])
+		old_size++;
+	shell->env = ft_realloc(shell->env, (old_size + 1) * sizeof(char *), (old_size + 2) * sizeof(char *));
 	shell->env[i] = new_var;
 	shell->env[i + 1] = NULL;
 }
