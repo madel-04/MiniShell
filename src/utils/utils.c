@@ -96,6 +96,7 @@ char	**create_default_env(void)
 	env[0] = ft_strjoin3("PWD=", cwd, "");
 	env[1] = ft_strdup("SHLVL=1");
 	env[2] = ft_strdup("_=/usr/bin/env");
-	env[3] = NULL;
+	env[3] = ft_strdup("OLDPWD");
+	env[4] = NULL;
 	return (env);
 }
