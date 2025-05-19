@@ -25,8 +25,23 @@ static int	cd_too_many_args(char **argv, t_shell *shell)
 
 static char	*cd_get_path(char **argv, t_shell *shell)
 {
+	char	*path;
+
 	if (!argv[1] || argv[1][0] == '\0')
 		return (get_env_value("HOME", shell->env));
+	else if (ft_strcmp(argv[1], "-") == 0)
+	{
+		path = get_env_value("OLDPWD", shell->env);
+		if (!path)
+		{
+			ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+			shell->last_exit_status = 1;
+			return (NULL);
+		}
+		ft_putstr_fd(path, 1);
+		ft_putchar_fd('\n', 1);
+		return (path);
+	}
 	else
 		return (argv[1]);
 }

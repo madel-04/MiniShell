@@ -31,7 +31,7 @@ SRC =   $(SRC_DIR)builtins/builtins.c \
 
 
 
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=address
 LDFLAGS = -lreadline -Llibft -lft
 
 OBJ = $(SRC:$(SRC_DIR)%= $(OBJ_DIR)%)
