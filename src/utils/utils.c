@@ -41,23 +41,23 @@ int	ft_isspace(int c)
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
-    void	*new_ptr;
+	void	*new_ptr;
 
-    if (new_size == 0)
-    {
-        free(ptr);
-        return (NULL);
-    }
-    new_ptr = malloc(new_size);
-    if (!new_ptr)
-        return (NULL);
-    if (ptr && old_size > 0)
-    {
-        size_t copy_size = old_size < new_size ? old_size : new_size;
-        ft_memcpy(new_ptr, ptr, copy_size);
-        free(ptr);
-    }
-    return (new_ptr);
+	if (new_size == 0)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	if (ptr && old_size > 0)
+	{
+		size_t copy_size = old_size < new_size ? old_size : new_size;
+		ft_memcpy(new_ptr, ptr, copy_size);
+		free(ptr);
+	}
+	return (new_ptr);
 }
 
 void	free_array(char **arr)
@@ -96,6 +96,7 @@ char	**create_default_env(void)
 	env[0] = ft_strjoin3("PWD=", cwd, "");
 	env[1] = ft_strdup("SHLVL=1");
 	env[2] = ft_strdup("_=/usr/bin/env");
-	env[3] = NULL;
+	env[3] = ft_strdup("OLDPWD");
+	env[4] = NULL;
 	return (env);
 }

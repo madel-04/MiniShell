@@ -20,6 +20,7 @@ SRC =   $(SRC_DIR)builtins/builtins.c \
 				$(SRC_DIR)executor/execute_cmd.c \
 				$(SRC_DIR)executor/execute_cmd_utils.c \
 				$(SRC_DIR)executor/redirect_io.c \
+				$(SRC_DIR)executor/heredoc.c \
 				$(SRC_DIR)utils/env_utils.c \
 				$(SRC_DIR)utils/get_word.c \
 				$(SRC_DIR)utils/utils2.c \

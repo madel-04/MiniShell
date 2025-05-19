@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	handle_heredoc(char *delimiter)
+/* static int	handle_heredoc(char *delimiter)
 {
 	int					fd[2];
 	struct sigaction	sa;
@@ -31,9 +31,9 @@ static int	handle_heredoc(char *delimiter)
 	sigaction(SIGINT, &old_sa, NULL);
 	close(fd[1]);
 	return (fd[0]);
-}
+} */
 
-static int	open_file(t_redir *redir)
+int	open_file(t_redir *redir)
 {
 	int	fd;
 
