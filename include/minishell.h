@@ -189,11 +189,12 @@ t_token	*new_token(int type, char *value);
 // *** UTILS ***
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 int		ft_isspace(int c);
-void	*ft_realloc(void *ptr, size_t new_size);
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 //void	print_tokens(t_token *tokens);
 //void	print_cmd(t_cmd *cmd);
 void	free_array(char **arr);
 int		ft_isdigit_str(const char *str);
+char 	**create_default_env(void);
 
 // *** UTILS 2 ***
 char	*get_cmd_path(char *cmd, char **env);
@@ -206,6 +207,9 @@ int		validate_token_sequence(t_token *tokens, t_shell *shell);
 int		handle_unexpected_pipe(t_shell *shell);
 int		validate_pipe(t_token *cur, t_token *tokens, t_shell *shell);
 int		validate_redirection(t_token *cur, t_shell *shell);
+
+// *** SHELL LEVEL ***
+void	increment_shlvl(char **env);
 
 #endif
 //& https://miro.com/app/board/uXjVIAeHVPM=/?share_link_id=518566271365
