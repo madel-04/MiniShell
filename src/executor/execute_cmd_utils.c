@@ -41,7 +41,7 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell)
 	else if (ft_strcmp(cmd->argv[0], "cd") == 0)
 		return (shell->last_exit_status = ft_cd(cmd->argv, shell));
 	else if (ft_strcmp(cmd->argv[0], "pwd") == 0)
-		return (shell->last_exit_status = ft_pwd());
+		return (shell->last_exit_status = ft_pwd(shell));
 	else if (ft_strcmp(cmd->argv[0], "export") == 0)
 		return (shell->last_exit_status = ft_export(cmd->argv, shell));
 	else if (ft_strcmp(cmd->argv[0], "unset") == 0)
@@ -83,6 +83,7 @@ static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 		execute_external(cmd, shell);
 }
 */
+
 static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 {
 	redirect_io(cmd->redir);

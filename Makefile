@@ -24,6 +24,7 @@ SRC =   $(SRC_DIR)builtins/builtins.c \
 				$(SRC_DIR)utils/get_word.c \
 				$(SRC_DIR)utils/utils2.c \
 				$(SRC_DIR)builtins/builtins2.c \
+				$(SRC_DIR)builtins/builtins3.c \
 				$(SRC_DIR)executor/add_redirections.c \
 				$(SRC_DIR)parser/handle_quotes.c \
 				$(SRC_DIR)utils/ft_qsort.c \

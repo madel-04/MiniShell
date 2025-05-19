@@ -106,7 +106,7 @@ int		add_redirection(t_parse *p);
 // *** BUILTINS ***
 int		ft_echo(char **argv);
 int		ft_cd(char **argv, t_shell *shell);
-int		ft_pwd(void);
+int		ft_pwd(t_shell *shell);
 int		ft_unset(char **argv, t_shell *shell);
 int		ft_env(t_shell *shell);
 
@@ -187,6 +187,7 @@ void	add_token(t_token **head, t_token *new_token);
 t_token	*new_token(int type, char *value);
 
 // *** UTILS ***
+char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 int		ft_isspace(int c);
 void	*ft_realloc(void *ptr, size_t new_size);
 //void	print_tokens(t_token *tokens);

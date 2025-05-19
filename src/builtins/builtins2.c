@@ -43,11 +43,30 @@ static void	handle_valid_identifier(char *arg, char *eq_sign, t_shell *shell)
 	*eq_sign = '=';
 }
 
+static int	process_export_arg(char *arg, t_shell *shell)
+{
+	char	*eq_sign;
+
+	eq_sign = ft_strchr(arg, '=');
+	if (!is_valid_identifier(arg, eq_sign))
+	{
+		handle_invalid_identifier(arg, shell);
+		return (1);
+	}
+	else if (eq_sign)
+		handle_valid_identifier(arg, eq_sign, shell);
+	else
+	{
+		if (!get_env_value(arg, shell->env))
+			set_env_var(arg, NULL, shell);
+	}
+	return (0);
+}
+
 int	ft_export(char **argv, t_shell *shell)
 {
-	int		i;
-	char	*eq_sign;
-	int		ret;
+	int	i;
+	int	ret;
 
 	i = 1;
 	ret = 0;
@@ -58,46 +77,9 @@ int	ft_export(char **argv, t_shell *shell)
 	}
 	while (argv[i])
 	{
-		eq_sign = ft_strchr(argv[i], '=');
-		if (!is_valid_identifier(argv[i], eq_sign))
-		{
-			handle_invalid_identifier(argv[i], shell);
+		if (process_export_arg(argv[i], shell))
 			ret = 1;
-		}
-		else if (eq_sign)
-			handle_valid_identifier(argv[i], eq_sign, shell);
-		else
-		{
-			if (!get_env_value(argv[i], shell->env))
-				set_env_var(argv[i], NULL, shell);
-		}
 		i++;
 	}
 	return (ret);
-}
-
-int	ft_exit(char **argv, t_shell *shell)
-{
-	int	exit_code;
-
-	if (argv[1] && argv[2])
-	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		shell->last_exit_status = 1;
-		return (1);
-	}
-	if (argv[1] && !argv[2])
-	{
-		if (!ft_isdigit_str(argv[1]))
-		{
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(argv[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			exit(2);
-		}
-		exit_code = ft_atoi(argv[1]);
-		exit_code %= 256;
-		exit(exit_code);
-	}
-	exit(shell->last_exit_status);
 }

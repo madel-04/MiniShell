@@ -17,6 +17,8 @@ char	*get_env_value(const char *name, char **env)
 	int	i;
 	int	len;
 
+	if (!name || !env)
+		return (NULL);
 	len = ft_strlen(name);
 	i = 0;
 	while (env[i])
