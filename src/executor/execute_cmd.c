@@ -97,7 +97,7 @@ int	execute_cmd(t_cmd *cmds, t_shell *shell)
 			saved_stdin = dup(STDIN_FILENO);
 			saved_stdout = dup(STDOUT_FILENO);
 			redirect_io(cmds->redir);
-			execute_builtin(cmds, shell);
+			ret = execute_builtin(cmds, shell);
 			dup2(saved_stdin, STDIN_FILENO);
 			dup2(saved_stdout, STDOUT_FILENO);
 			close(saved_stdin);

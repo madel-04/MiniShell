@@ -32,25 +32,6 @@ char	*get_env_value(const char *name, char **env)
 	return (NULL);
 }
 
-static char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
-{
-	size_t	len1;
-	size_t	len2;
-	size_t	len3;
-	char	*result;
-
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	len3 = ft_strlen(s3);
-	result = malloc(len1 + len2 + len3 + 1);
-	if (!result)
-		return (NULL);
-	ft_strcpy(result, s1);
-	ft_strcat(result, s2);
-	ft_strcat(result, s3);
-	return (result);
-}
-
 void	set_env_var(const char *name, const char *value, t_shell *shell)
 {
 	int		i;
