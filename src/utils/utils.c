@@ -42,6 +42,7 @@ int	ft_isspace(int c)
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;
+	size_t	copy_size;
 
 	if (new_size == 0)
 	{
@@ -53,7 +54,10 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 		return (NULL);
 	if (ptr && old_size > 0)
 	{
-		size_t copy_size = old_size < new_size ? old_size : new_size;
+		if (old_size < new_size)
+			copy_size = old_size;
+		else
+			copy_size = new_size;
 		ft_memcpy(new_ptr, ptr, copy_size);
 		free(ptr);
 	}
