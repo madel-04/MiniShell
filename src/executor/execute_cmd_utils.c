@@ -71,7 +71,10 @@ static void	execute_external(t_cmd *cmd, t_shell *shell)
 	perror("execve");
 	free(path);
 	free_array(env_arr);
-	exit(126);
+	if (errno == ENOENT)
+		exit(127);
+	else
+		exit(126);
 }
 /*
 static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
@@ -87,13 +90,17 @@ static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 {
 	redirect_io(cmd->redir);
+	if (!cmd->argv || !cmd->argv[0])
+	{
+		exit(0);
+	}
 	if (is_builtin_cmd(cmd))
 		exit(execute_builtin(cmd, shell));
 	else
 		execute_external(cmd, shell);
 }
 
-static void	setup_child_process(int prev_pipe_in, int fd[2],
+/* static void	setup_child_process(int prev_pipe_in, int fd[2],
 				t_cmd *current, t_shell *shell)
 {
 	if (prev_pipe_in != -1)
@@ -109,6 +116,36 @@ static void	setup_child_process(int prev_pipe_in, int fd[2],
 	}
 	execute_single_cmd(current, shell);
 	exit(shell->last_exit_status);
+} */
+
+static void	setup_child_process(int prev_pipe_in, int fd[2], t_cmd *current, t_shell *shell)
+{
+	int		has_output_redir;
+	t_redir	*redir;
+    if (prev_pipe_in != -1)
+    {
+        dup2(prev_pipe_in, STDIN_FILENO);
+        close(prev_pipe_in);
+    }
+    has_output_redir = 0;
+    redir = current->redir;
+    while (redir)
+    {
+        if (redir->type == TOKEN_OUTPUT || redir->type == TOKEN_RED_OUTPUT_APPEND)
+        {
+            has_output_redir = 1;
+            break;
+        }
+        redir = redir->next;
+    }
+    if (current->next && !has_output_redir)
+    {
+        dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		close(fd[0]);
+    }
+    execute_single_cmd(current, shell);
+    exit(shell->last_exit_status);
 }
 
 pid_t	create_child_process(int prev_pipe_in, int fd[2],
