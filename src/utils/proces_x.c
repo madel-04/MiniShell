@@ -76,10 +76,18 @@ int	process_word(t_parse *p)
 void	close_unused_pipes(int *prev_pipe_in, int fd[2], t_cmd *current)
 {
 	if (*prev_pipe_in != -1)
+	{
 		close(*prev_pipe_in);
+		*prev_pipe_in = -1;
+	}
 	if (current->next)
 	{
 		close(fd[1]);
 		*prev_pipe_in = fd[0];
+	}
+	else
+	{
+		close(fd[0]);
+		close(fd[1]);
 	}
 }
