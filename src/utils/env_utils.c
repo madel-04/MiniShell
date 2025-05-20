@@ -111,7 +111,8 @@ void	unset_env_var(const char *name, t_shell *shell)
 	while (shell->env[i])
 	{
 		if (ft_strncmp(shell->env[i], name, ft_strlen(name)) == 0
-			&& shell->env[i][ft_strlen(name)] == '=')
+			&& (shell->env[i][ft_strlen(name)] == '='
+			|| shell->env[i][ft_strlen(name)] == '\0'))
 		{
 			free(shell->env[i]);
 			j = i;

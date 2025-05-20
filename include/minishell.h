@@ -103,6 +103,8 @@ typedef struct s_partition_args
 // *** ADD REDIRECTIONS ***
 int		add_redirection(t_parse *p);
 
+char	**ft_arrdup(char **arr);
+
 // *** BUILTINS ***
 int		ft_echo(char **argv);
 int		ft_cd(char **argv, t_shell *shell);

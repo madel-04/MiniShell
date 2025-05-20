@@ -12,10 +12,42 @@
 
 #include "minishell.h"
 
-void	process_pipe(t_parse *p)
+/* void	process_pipe(t_parse *p)
 {
 	if (p->current_cmd && p->argv)
 		p->current_cmd->argv = p->argv;
+	p->current_cmd = NULL;
+	p->token = p->token->next;
+}  */
+void	process_pipe(t_parse *p)
+{
+	int argc = 0, i = 0;
+
+	if (p->current_cmd)
+	{
+		if (p->argv)
+		{
+			while (p->argv[argc])
+				argc++;
+			p->current_cmd->argv = malloc(sizeof(char *) * (argc + 1));
+			if (!p->current_cmd->argv)
+				exit(1);
+			for (i = 0; i < argc; i++)
+				p->current_cmd->argv[i] = ft_strdup(p->argv[i]);
+			p->current_cmd->argv[argc] = NULL;
+			for (i = 0; i < argc; i++)
+				free(p->argv[i]);
+			free(p->argv);
+			p->argv = NULL;
+		}
+		else
+		{
+			p->current_cmd->argv = malloc(sizeof(char *));
+			if (!p->current_cmd->argv)
+				exit(1);
+			p->current_cmd->argv[0] = NULL;
+		}
+	}
 	p->current_cmd = NULL;
 	p->token = p->token->next;
 }
@@ -73,7 +105,7 @@ int	process_word(t_parse *p)
 	return (1);
 }
 
-void	close_unused_pipes(int *prev_pipe_in, int fd[2], t_cmd *current)
+/* void	close_unused_pipes(int *prev_pipe_in, int fd[2], t_cmd *current)
 {
 	if (*prev_pipe_in != -1)
 		close(*prev_pipe_in);
@@ -82,4 +114,25 @@ void	close_unused_pipes(int *prev_pipe_in, int fd[2], t_cmd *current)
 		close(fd[1]);
 		*prev_pipe_in = fd[0];
 	}
+} */
+//// filepath: src/utils/proces_x.c
+// ...existing code...
+void	close_unused_pipes(int *prev_pipe_in, int fd[2], t_cmd *current)
+{
+    if (*prev_pipe_in != -1)
+    {
+        close(*prev_pipe_in);
+        *prev_pipe_in = -1;
+    }
+    if (current->next)
+    {
+        close(fd[1]);
+        *prev_pipe_in = fd[0];
+    }
+    else
+    {
+        close(fd[0]);
+        close(fd[1]);
+    }
 }
+// ...existing code...

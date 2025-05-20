@@ -58,6 +58,8 @@ static void	execute_external(t_cmd *cmd, t_shell *shell)
 	char	*path;
 	char	**env_arr;
 
+	if (!cmd->argv || !cmd->argv[0])
+		exit(0);
 	path = get_cmd_path(cmd->argv[0], shell->env);
 	env_arr = env_to_array(shell->env);
 	if (!path)
@@ -71,7 +73,10 @@ static void	execute_external(t_cmd *cmd, t_shell *shell)
 	perror("execve");
 	free(path);
 	free_array(env_arr);
-	exit(126);
+	if (errno == ENOENT)
+		exit(127);
+	else
+		exit(126);
 }
 /*
 static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
@@ -83,6 +88,15 @@ static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 		execute_external(cmd, shell);
 }
 */
+
+/* static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
+{
+	redirect_io(cmd->redir);
+	if (is_builtin_cmd(cmd))
+		exit(execute_builtin(cmd, shell));
+	else
+		execute_external(cmd, shell);
+} */
 
 static void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 {

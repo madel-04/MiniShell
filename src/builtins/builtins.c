@@ -111,7 +111,7 @@ int	ft_env(t_shell *shell)
 	return (0);
 }
 
-int	ft_exit(char **argv, t_shell *shell)
+/* int	ft_exit(char **argv, t_shell *shell)
 {
 	int	exit_code;
 
@@ -135,4 +135,30 @@ int	ft_exit(char **argv, t_shell *shell)
 		exit(exit_code);
 	}
 	exit(shell->last_exit_status);
+} */
+int	ft_exit(char **argv, t_shell *shell)
+{
+    int	exit_code;
+
+    ft_putstr_fd("exit\n", 1);
+    if (argv[1])
+    {
+        if (!ft_isdigit_str(argv[1]))
+        {
+            ft_putstr_fd("minishell: exit: ", 2);
+            ft_putstr_fd(argv[1], 2);
+            ft_putstr_fd(": numeric argument required\n", 2);
+            exit(2);
+        }
+        if (argv[2])
+        {
+            ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+            shell->last_exit_status = 1;
+            return (1);
+        }
+        exit_code = ft_atoi(argv[1]);
+        exit_code %= 256;
+        exit(exit_code);
+    }
+    exit(shell->last_exit_status);
 }

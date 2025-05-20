@@ -42,7 +42,7 @@ static void	setup_pipe(int fd[2])
 	}
 }
 
-static void	handle_pipes(t_cmd *cmds, t_shell *shell)
+/* static void	handle_pipes(t_cmd *cmds, t_shell *shell)
 {
 	int		fd[2];
 	int		prev_pipe_in;
@@ -59,6 +59,26 @@ static void	handle_pipes(t_cmd *cmds, t_shell *shell)
 		current = current->next;
 	}
 	wait_for_children(shell);
+} */
+
+// ...existing code...
+static void	handle_pipes(t_cmd *cmds, t_shell *shell)
+{
+    int		fd[2];
+    int		prev_pipe_in;
+    t_cmd	*current;
+
+    prev_pipe_in = -1;
+    current = cmds;
+    while (current)
+    {
+        if (current->next)
+            setup_pipe(fd);
+        create_child_process(prev_pipe_in, fd, current, shell);
+        close_unused_pipes(&prev_pipe_in, fd, current);
+        current = current->next;
+    }
+    wait_for_children(shell);
 }
 
 int	is_builtin_cmd(t_cmd *cmd)
