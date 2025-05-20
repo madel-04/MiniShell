@@ -35,7 +35,6 @@ void	increment_shlvl(char **env)
 		}
 		i++;
 	}
-	// Si no existe, añadirlo
 	env[i] = ft_strdup("SHLVL=1");
 	env[i + 1] = NULL;
 }

@@ -170,6 +170,7 @@ void	close_unused_pipes(int *prev_pipe_in, int fd[2], t_cmd *current);
 
 // *** REDIRECT IO ***
 void	redirect_io(t_redir *redir);
+int		handle_heredoc(char *delimiter);
 
 // *** SIGNALS ***
 int		ft_sigemptyset(sigset_t *set);
@@ -194,7 +195,7 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 //void	print_cmd(t_cmd *cmd);
 void	free_array(char **arr);
 int		ft_isdigit_str(const char *str);
-char 	**create_default_env(void);
+char	**create_default_env(void);
 
 // *** UTILS 2 ***
 char	*get_cmd_path(char *cmd, char **env);
