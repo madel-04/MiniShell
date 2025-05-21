@@ -50,3 +50,24 @@ int	handle_heredoc(char *delimiter)
 	close(fd[1]);
 	return (fd[0]);
 }
+
+int	execute_builtin(t_cmd *cmd, t_shell *shell)
+{
+	if (!cmd->argv || !cmd->argv[0])
+		return (0);
+	if (ft_strcmp(cmd->argv[0], "echo") == 0)
+		return (shell->last_exit_status = ft_echo(cmd->argv));
+	else if (ft_strcmp(cmd->argv[0], "cd") == 0)
+		return (shell->last_exit_status = ft_cd(cmd->argv, shell));
+	else if (ft_strcmp(cmd->argv[0], "pwd") == 0)
+		return (shell->last_exit_status = ft_pwd(shell));
+	else if (ft_strcmp(cmd->argv[0], "export") == 0)
+		return (shell->last_exit_status = ft_export(cmd->argv, shell));
+	else if (ft_strcmp(cmd->argv[0], "unset") == 0)
+		return (shell->last_exit_status = ft_unset(cmd->argv, shell));
+	else if (ft_strcmp(cmd->argv[0], "env") == 0)
+		return (shell->last_exit_status = ft_env(shell));
+	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
+		ft_exit(cmd->argv, shell);
+	return (0);
+}
