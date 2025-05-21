@@ -1,0 +1,10 @@
+total 80
+-rw-r--r-- 1 may may  2014 May 20 23:18 Makefile
+-rw-r--r-- 1 may may    57 May 21 12:33 archivo.txt
+-rw-r--r-- 1 may may    21 May 21 12:33 entrada.txt
+drwxr-xr-x 2 may may  4096 May 20 21:29 include
+drwxr-xr-x 8 may may  4096 May 21 11:28 libft
+-rwxr-xr-x 1 may may 52896 May 21 12:14 minishell
+drwxr-xr-x 8 may may  4096 May 21 11:28 obj
+-rw-r--r-- 1 may may     0 May 21 12:34 salida_ls.txt
+drwxr-xr-x 8 may may  4096 May 20 21:09 src

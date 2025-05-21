@@ -1,0 +1,3 @@
+Hola mundo
+segunda línea
+segunda línea cat archivo.txt
