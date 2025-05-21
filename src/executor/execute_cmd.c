@@ -81,6 +81,29 @@ int	is_builtin_cmd(t_cmd *cmd)
 		return (1);
 	return (0);
 }
+/* int	prepare_heredocs(t_cmd *cmds)
+{
+    t_cmd	*cmd = cmds;
+    t_redir	*redir;
+
+    while (cmd)
+    {
+        redir = cmd->redir;
+        while (redir)
+        {
+            if (redir->type == TOKEN_HEREDOC)
+            {
+                int fd = handle_heredoc(redir->filename);
+                if (fd == -1)
+                    return (0);
+				redir->fd = fd;
+            }
+            redir = redir->next;
+        }
+        cmd = cmd->next;
+    }
+    return (1);
+} */
 
 int	execute_cmd(t_cmd *cmds, t_shell *shell)
 {
